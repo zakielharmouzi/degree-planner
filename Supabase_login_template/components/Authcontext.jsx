@@ -17,15 +17,18 @@ export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [user, setUser] = useState(null);
 
-  const signIn = async (email, password) => {
-    console.log("Signing in");
-    try {
-      await supabase.auth.signInWithPassword({ email, password });
-    } catch (error) {
-      console.error("Sign-in failed", error);
-      throw error; // Rethrow the error for higher-level error handling if needed.
-    }
-  };
+const signIn = async (email, password) => {
+  console.log("Signing in");
+  const {error} = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+  if (error){
+    alert(error.message);
+  }
+  console.log("Sign-in successful");
+  
+};
 
   const signOut = async () => {
     try {

@@ -25,10 +25,11 @@ useEffect(() => {
 
 
     return(
-        <div>
-            <h1>Helloooo    </h1>
-            <button onClick={byebye}>Sign Out</button>
-        </div>
+        <div class="flex flex-col items-center justify-center space-y-4 p-4 bg-gray-100">
+    <h1 class="text-center text-3xl font-bold">Helloooo</h1>
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={byebye}>Sign Out</button>
+</div>
+
     );
 }
 

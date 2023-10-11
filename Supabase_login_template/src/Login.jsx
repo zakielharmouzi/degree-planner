@@ -16,8 +16,7 @@ function Login() {
   const handleSignIn = async (e) => {
     e.preventDefault();
 
-    try {
-      // Call the signIn function from Authcontext
+    try { 
     signIn(email, password);
     } catch (error) {
       setError(error.message);
@@ -32,28 +31,33 @@ function Login() {
   }
   }, [user]);      
   return (
-    <>
-      <div className="Form">
-        <h1>Supabase Login Template</h1>
-        <h2>Sign In</h2>
-        <form onSubmit={handleSignIn}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit">Sign In</button>
-        </form>
-        {error && <p className="error">{error}</p>}
-      </div>
-    </>
+   <div className="flex justify-center items-center min-h-screen">
+  <div className="bg-white shadow-md p-8 rounded-lg">
+    <h1 className="text-2xl font-bold mb-4">Supabase Login Template</h1>
+    <h2 className="text-lg mb-4">Sign In</h2>
+    <form onSubmit={handleSignIn} className="mb-4">
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="w-full p-2 border rounded"
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="w-full p-2 border rounded mt-2"
+      />
+      <button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+        Sign In
+      </button>
+    </form>
+    {error && <p className="text-red-500">{error}</p>}
+  </div>
+</div>
+
   );
 }
 
