@@ -1,6 +1,7 @@
-import Login from './Login'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
 import './App.css'
-import Home from './Home'
+import Home from './pages/Home'
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 
 function App() {  
@@ -9,6 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path ="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
       </Routes>
     </BrowserRouter>

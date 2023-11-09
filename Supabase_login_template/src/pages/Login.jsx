@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../components/Authcontext';
+import { useAuth } from '../../components/Authcontext';
 import { useNavigate  } from 'react-router-dom';
 
 
@@ -29,11 +29,15 @@ function Login() {
   }else{
     Navigate('/home')
   }
-  }, [user]);      
+  }, [user]);     
+  const hadlerouting = async (e) => {
+    e.preventDefault();
+    Navigate('/signup')
+  };
   return (
    <div className="flex justify-center items-center min-h-screen">
   <div className="bg-white shadow-md p-8 rounded-lg">
-    <h1 className="text-2xl font-bold mb-4">Supabase Login Template</h1>
+    <h1 className="text-2xl font-bold mb-4 text-center"> Login </h1>
     <h2 className="text-lg mb-4">Sign In</h2>
     <form onSubmit={handleSignIn} className="mb-4">
       <input
@@ -52,6 +56,11 @@ function Login() {
       />
       <button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
         Sign In
+      </button>
+    </form>
+    <form onSubmit={hadlerouting} className="">
+    <button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Sign Up
       </button>
     </form>
     {error && <p className="text-red-500">{error}</p>}
