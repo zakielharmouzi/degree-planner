@@ -3,6 +3,7 @@ import { useAuth } from "../../components/Authcontext";
 import { useNavigate } from "react-router-dom";
 import supabase from "../../utils/Supabase";
 import "reactflow/dist/style.css";
+import Flowchart from "./elements";
 import ReactFlow, {
   addEdge,
   MiniMap,
@@ -11,10 +12,10 @@ import ReactFlow, {
   useNodesState,
   useEdgesState
 } from "reactflow";
-import {
-  nodes as initialNodes,
-  edges as initialEdges
-} from "./elements";
+// import {
+//   nodes as initialNodes,
+//   edges as initialEdges
+// } from "./elements";
 
 const onInit = (reactFlowInstance) =>
   console.log("flow loaded:", reactFlowInstance);
@@ -26,12 +27,12 @@ function Home() {
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
   const [id, setId] = useState('');
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
-  );
+  // const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  // const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  // const onConnect = useCallback(
+  //   (params) => setEdges((eds) => addEdge(params, eds)),
+  //   [setEdges]
+  // );
   
   const getdata = async () => {
     console.log(user.email);
@@ -75,8 +76,8 @@ function Home() {
       <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={byebye}>
         Sign Out
       </button>
-
-      <div style={{ width: '1000px', height: '400px' }}>
+    <Flowchart />
+      {/* <div style={{ width: '1000px', height: '400px' }}>
 
         <ReactFlow
       nodes={nodes}
@@ -107,7 +108,7 @@ function Home() {
       <Controls />
       <Background color="#aaa" gap={16} />
     </ReactFlow>
-      </div>
+      </div> */}
     </div>
   );
 }
