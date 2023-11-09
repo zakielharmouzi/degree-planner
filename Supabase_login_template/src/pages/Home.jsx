@@ -3,7 +3,6 @@ import { useAuth } from "../../components/Authcontext";
 import { useNavigate } from "react-router-dom";
 import supabase from "../../utils/Supabase";
 import "reactflow/dist/style.css";
-import { getcoursedata } from "./elements";
 import ReactFlow, {
   addEdge,
   MiniMap,
@@ -33,7 +32,7 @@ function Home() {
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
-
+  
   const getdata = async () => {
     console.log(user.email);
     try {
@@ -51,7 +50,6 @@ function Home() {
 
   useEffect(() => {
     getdata();
-    getcoursedata();
   }, []);
 
   const byebye = async (e) => {
