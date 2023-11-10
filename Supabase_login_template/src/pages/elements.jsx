@@ -43,7 +43,7 @@ export default function Flowchart() {
           let nodearray = []
            data.map(course => (
 
-           nodearray.push({ id: course.course_id.toString(), position: {x: Math.floor(Math.random() *500), y: Math.floor(Math.random() *500)},
+           nodearray.push({ id: course.course_id.toString(), position: {x: Math.floor(Math.random() *100), y: Math.floor(Math.random() *100)},
            data: { label : course.course_code} })
             
            ))
@@ -62,19 +62,19 @@ export default function Flowchart() {
     
   
   return (
-    <div style={{ width: '1000px', height: '400px' }}>
-      {error && (<p> {error} </p>)}
-      {nodes && <ReactFlow 
-        nodes={nodes} 
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-    >
-      <Controls/>
-      <MiniMap/>
-      <Background varaint = 'dots' gap ={12} size = {1} />
-      </ReactFlow>}
-    </div>
+    <div style={{ width: '100%', height: '100vh' }}>
+  {error && (<p> {error} </p>)}
+  {nodes && <ReactFlow 
+    nodes={nodes} 
+    edges={edges}
+    onNodesChange={onNodesChange}
+    onEdgesChange={onEdgesChange}
+    onConnect={onConnect}
+  >
+    <Controls/>
+    <MiniMap/>
+    <Background variant='dots' gap={12} size={1} />
+  </ReactFlow>}
+</div>
   );
 }
