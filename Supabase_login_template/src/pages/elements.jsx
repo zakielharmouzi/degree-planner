@@ -43,7 +43,7 @@ export default function Flowchart() {
           let nodearray = []
            data.map(course => (
 
-           nodearray.push({ id: course.course_id.toString(), position: {x: Math.floor(Math.random() *100), y: Math.floor(Math.random() *100)},
+           nodearray.push({ id: course.course_id.toString(), position: {x: Math.floor(Math.random() *500), y: Math.floor(Math.random() *500)},
            data: { label : course.course_code} })
             
            ))
