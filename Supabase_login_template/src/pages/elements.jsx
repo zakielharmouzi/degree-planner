@@ -9,6 +9,7 @@ import ReactFlow, {
 } from 'reactflow';
 import supabase from '../../utils/Supabase';
 import 'reactflow/dist/style.css';
+import Modal from 'react-modal';
 
 const initialNodes = [
   { id: 999, position: { x: 9999, y: 9999 }, data: { label: 'test' } },
@@ -20,6 +21,8 @@ export default function Flowchart() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [error, setError] = useState(null);
   const [courses, setCourses] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedCourseName, setSelectedCourseName] = useState('');
 
   const onConnect = useCallback((params) =>
     setEdges((eds) => addEdge(params, eds)),
@@ -80,7 +83,6 @@ export default function Flowchart() {
       }
 
       if (data) {
-        console.log(data);
         let nodearray = [];
         data.map((course) => {
           let coordinates = handleCoordinates(course);
@@ -113,7 +115,6 @@ useEffect(() => {
       setError('Could not fetch prerequisites');
     }
     if (data) {
-      console.log(data);
       const edgeArray = data.map((prereq) => ({
         id: `${prereq.course_id}-${prereq.prereq_id}`,
         source: prereq.prereq_id.toString(),
@@ -125,35 +126,53 @@ useEffect(() => {
   };
   fetchEdges();
 }, [nodes]);
+Modal.setAppElement('#root'); // Set the root element to handle screen readers
 
-  const onElementClick = (event, element) => {
-  if (element?.data?.courseName) {
-    setSelectedNode(element);
-    setSelectedCourseName(element.data.courseName);
-  } else {
-    setSelectedNode(null);
-    setSelectedCourseName('');
-  }
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+const onNodeClick = (event, node) => {
+  setSelectedCourseName(node.courseName);
+  console.log(node.courseName);
+  setModalOpen(true);
 };
 
-
-
-  return (
-    <div style={{ width: '100%', height: '100vh' }}>
-      {error && <p> {error} </p>}
-      {nodes && (
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
+return (
+  <div style={{ width: '100%', height: '100vh' }}>
+    {error && <p> {error} </p>}
+    {nodes && (
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        onNodeClick={onNodeClick}  
         >
-          <Controls />
-          <MiniMap />
-          <Background variant="dots" gap={12} size={1} />
-        </ReactFlow>
-      )}
-    </div>
-  );
+        <Controls />
+        <MiniMap />
+        <Background variant="dots" gap={12} size={1} />
+      </ReactFlow>
+    )}
+
+    <Modal
+      isOpen={isModalOpen}
+      onRequestClose={() => setModalOpen(false)}
+      style={customStyles}
+      contentLabel="Course Name Modal"
+    >
+      <h2>Selected Course</h2>
+      <p>{selectedCourseName}</p>
+      <button class='g-blue-500 hover:bg-gray-200 text-black font-bold py-2 px-2 rounded' onClick={() => setModalOpen(false)}>Close</button>
+    </Modal>
+  </div>
+);
+
 }

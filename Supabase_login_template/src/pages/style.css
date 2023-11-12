@@ -12,7 +12,7 @@
   
   .pageTitle {
     font-family: 'Helvetica', sans-serif;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
     color: #3498db;
     margin-bottom: 0;
@@ -27,7 +27,7 @@
     background-color: #3498db;
     color: white;
     font-weight: bold;
-    padding: 10px 15px;
+    padding: 5px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
