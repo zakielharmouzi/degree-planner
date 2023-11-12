@@ -11,7 +11,7 @@ function Home() {
   const { signOut } = useAuth();
   const Navigate = useNavigate();
   const { user } = useAuth();
-  const [loading, setLoading] = useState(true); // New state for loading spinner
+  const [loading, setLoading] = useState(true); 
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
   const [id, setId] = useState('');
