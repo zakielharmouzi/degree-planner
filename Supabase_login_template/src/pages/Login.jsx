@@ -3,13 +3,13 @@ import { useAuth } from '../../components/Authcontext';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const { signIn } = useAuth();
+  const { signIn, error } = useAuth();
   const { user } = useAuth();
   const Navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -74,7 +74,7 @@ function Login() {
               </button>
             </div>
           </form>
-          {error && <p className="text-red-500">{error}</p>}
+          {error && <p className="text-red-500 px-12 ">{error}</p>}
 
           <div className="text-center text-gray-400">
             Don't have an account?

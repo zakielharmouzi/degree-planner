@@ -16,19 +16,21 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [user, setUser] = useState(null);
+  const [error, setError] = useState(null); 
 
 const signIn = async (email, password) => {
   console.log("Signing in");
-  const {error} = await supabase.auth.signInWithPassword({
+  const {error: authError} = await supabase.auth.signInWithPassword({
     email,
     password,
   });
-  if (error){
-    alert(error.message);
-  }
-  console.log("Sign-in successful");
-  
-};
+   if (authError) {
+      setError(authError.message); // Set the error message in the context
+    } else {
+      console.log("Sign-in successful");
+      setError(null); // Clear the error message
+    }
+  };
 
   const signOut = async () => {
     try {
@@ -57,6 +59,7 @@ const signIn = async (email, password) => {
     supabase,
     signIn,
     signOut,
+    error,
   };
 
   return <Authcontext.Provider value={value}>{children}</Authcontext.Provider>;
