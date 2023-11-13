@@ -23,6 +23,7 @@ export default function Flowchart() {
   const [courses, setCourses] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedCourseName, setSelectedCourseName] = useState('');
+  const [selectedCoursecode, setSelectedCoursecode] = useState('');
 
   const onConnect = useCallback((params) =>
     setEdges((eds) => addEdge(params, eds)),
@@ -93,11 +94,11 @@ export default function Flowchart() {
               label: (
                 <div>
                   <div>{course.course_code}</div>
-                  {/* <div>{course.course_name}</div> */}
                 </div>
               ),
             },
             courseName: course.course_name,
+            courseCode: course.course_code,
           });
         });
         setNodes(nodearray);
@@ -119,6 +120,8 @@ useEffect(() => {
         id: `${prereq.course_id}-${prereq.prereq_id}`,
         source: prereq.prereq_id.toString(),
         target: prereq.course_id.toString(), 
+        type: 'smoothstep',
+        
       }));
       setEdges(edgeArray);
       setError(null);
@@ -126,7 +129,7 @@ useEffect(() => {
   };
   fetchEdges();
 }, [nodes]);
-Modal.setAppElement('#root'); // Set the root element to handle screen readers
+Modal.setAppElement('#root'); 
 
 const customStyles = {
   content: {
@@ -140,6 +143,7 @@ const customStyles = {
 };
 const onNodeClick = (event, node) => {
   setSelectedCourseName(node.courseName);
+  setSelectedCoursecode(node.courseCode);
   console.log(node.courseName);
   setModalOpen(true);
 };
@@ -151,9 +155,9 @@ return (
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
+        // onNodesChange={onNodesChange}
+        // onEdgesChange={onEdgesChange}
+        // onConnect={onConnect}
         onNodeClick={onNodeClick}  
         >
         <Controls />
@@ -169,9 +173,12 @@ return (
       contentLabel="Course Name Modal"
     >
       <h2>Selected Course</h2>
+      <p>{selectedCoursecode}</p>
       <p>{selectedCourseName}</p>
-      <button class='g-blue-500 hover:bg-gray-200 text-black font-bold py-2 px-2 rounded' onClick={() => setModalOpen(false)}>Close</button>
-    </Modal>
+        <div style={{ textAlign: 'center' }}>
+          <button class='g-blue-500 hover:bg-gray-200 text-black font-bold py-2 px-2 rounded flex:auto' onClick={() => setModalOpen(false)}>Close</button>
+        </div>
+      </Modal>
   </div>
 );
 
