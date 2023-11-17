@@ -99,6 +99,8 @@ export default function Flowchart() {
             },
             courseName: course.course_name,
             courseCode: course.course_code,
+            sourcePosition: 'right',
+            targetPosition: 'left',
           });
         });
         setNodes(nodearray);
@@ -119,9 +121,8 @@ useEffect(() => {
       const edgeArray = data.map((prereq) => ({
         id: `${prereq.course_id}-${prereq.prereq_id}`,
         source: prereq.prereq_id.toString(),
-        target: prereq.course_id.toString(), 
+        target: prereq.course_id.toString(),  
         type: 'smoothstep',
-        
       }));
       setEdges(edgeArray);
       setError(null);
