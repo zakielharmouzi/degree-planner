@@ -7,6 +7,7 @@ export const Authcontext = React.createContext({
   supabase: null,
   signIn: () => {},
   signOut: () => {},
+  resetPassword: () => {},
 });
 
 export function useAuth() {
@@ -40,6 +41,17 @@ const signIn = async (email, password) => {
     }
   };
 
+  const resetPassword = async (email) => {
+    console.log("reseting");
+    await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://supabase.com/docs/guides/auth/auth-password-reset',
+    });   if (error){
+      alert(error.message);
+    }
+    console.log("Reseting successful");
+    
+  };
+
   useEffect(() => {
     const authListener = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
@@ -57,7 +69,12 @@ const signIn = async (email, password) => {
     supabase,
     signIn,
     signOut,
+    resetPassword,
   };
+
+
+
+
 
   return <Authcontext.Provider value={value}>{children}</Authcontext.Provider>;
 }
