@@ -1,123 +1,122 @@
-import React,{useEffect,useState} from "react";
-import { MarkerType } from "reactflow";
-import supabase from "../../utils/Supabase";
-
-
-  
-  
-
-export const nodes = [
-  
-  {  
-    id: "1",
-    type: "input",
-    data: {
-      label: (
-        <>
-          Welcome to <strong>React Flow!</strong>
-        </>
-      )
-    },
-    position: { x: 20, y: 0 }
-  },
-  {
-    id: "2",
-    data: {
-      label: (
-        <>
-          This is a <strong>default node</strong>
-        </>
-      )
-    },
-    position: { x: 100, y: 100 }
-  },
-  {
-    id: "3",
-    data: {
-      label: (
-        <>
-          This one has a <strong>custom style</strong>
-        </>
-      )
-    },
-    position: { x: 400, y: 100 },
-    style: {
-      background: "#D6D5E6",
-      color: "#333",
-      border: "1px solid #222138",
-      width: 180
-    }
-  },
-  {
-    id: "4",
-    position: { x: 250, y: 200 },
-    data: {
-      label: "Another default node"
-    }
-  },
-  {
-    id: "5",
-    data: {
-      label: "Node id: 5"
-    },
-    position: { x: 250, y: 325 }
-  },
-  {
-    id: "6",
-    type: "output",
-    data: {
-      label: (
-        <>
-          An <strong>output node</strong>
-        </>
-      )
-    },
-    position: { x: 100, y: 480 }
-  },
-  {
-    id: "7",
-    type: "output",
-    data: { label: "Another output node" },
-    position: { x: 400, y: 450 }
-  }
-  
+import React, { useCallback, useState, useEffect } from 'react';
+import ReactFlow , {
+  MiniMap,
+  Controls,
+  Background,
+  useNodesState,
+  useEdgesState,
+  addEdge,
+} from 'reactflow';
+import supabase from '../../utils/Supabase';
+import 'reactflow/dist/style.css';
+ 
+const initialNodes = [
+  {id:999, position : {x:9999,y:9999}, data:{label:'test'}}
+];
+const initialEdges = [
+{}
 ];
 
+ 
+export default function Flowchart() {
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [error, setError] = useState(null); 
+  const [courses, setCourses] = useState(null);
 
-export const edges = [
-  { id: "e1-2", source: "1", target: "2", label: "this is an edge label" },
-  { id: "e1-3", source: "1", target: "3" },
-  {
-    id: "e3-4",
-    source: "3",
-    target: "4",
-    animated: true,
-    label: "animated edge"
-  },
-  {
-    id: "e4-5",
-    source: "4",
-    target: "5",
-    label: "edge with arrow head",
-    markerEnd: {
-      type: MarkerType.ArrowClosed
-    }
-  },
-  {
-    id: "e5-6",
-    source: "5",
-    target: "6",
-    type: "smoothstep",
-    label: "smooth step edge"
-  },
-  {
-    id: "e5-7",
-    source: "5",
-    target: "7",
-    type: "step",
-    style: { stroke: "#f6ab6c" },
-    label: "a step edge",
-    animated: true,
-    labelStyle: { fill: "#f6ab6c", fontWeight: 700 }
+  const onConnect = useCallback((params) =>setEdges((eds) => addEdge(params, eds)), [setEdges], )
+  let initialx = -110;
+  let x1 = initialx;
+  let x2 = initialx;
+  let x3 = initialx;
+  let y1 = 80;
+  let y2 = 350;
+  let y3 = 550;
+  const handleCoordinates = (course) => {
+    let coordinates = {}
+    let category = course.course_code;
+    
+    
+     if (category.includes('MTH') || category.includes('BIO') || category.includes('PHY') || category.includes('EGR')){
+      y1 = (y1 != 80) ? 80 : 150;
+      x1 = (y1 === 80) ? x1 : x1 + 200;
+      coordinates.x = x1;
+      coordinates.y = y1;
+      return coordinates
+     } 
+      if (category.includes('CSC')) {
+        if (x2 === initialx) {
+          x2 = x2+200
+          coordinates.x = x2;
+          coordinates.y = y2;
+          return coordinates
+        
+     }  else {
+      y2 = (y2 != 315) ? 315 : 385;
+      x2 = (y2=== 315) ? x2+200 : x2;
+      coordinates.x = x2;
+      coordinates.y = y2;
+      return coordinates
+     }
+    
+  } 
+    y3 = (y3 != 550) ? 550 : 620;
+    x3 = (y3=== 550) ? x3 : x3 + 200;
+    coordinates.x = x3;
+      coordinates.y = y3;
+    return coordinates
+  
+  
   }
-];
+  
+  useEffect(() =>{
+    const fetchNodes = async () => {
+      const { data, error } = await supabase
+        .from('courses')
+        .select('*')
+
+        if (error) {
+          setError('Could not fetch courses')
+          setCourses(null)
+        }
+
+        if (data) {
+          console.log(data);
+          let nodearray = []
+           data.map(course => {
+           let coordinates = handleCoordinates(course);
+           nodearray.push({ id: course.course_id.toString(), position: {x: coordinates.x, y: coordinates.y},
+           data: { label : course.course_code} })
+            
+        })
+           setNodes(nodearray)
+          setCourses(data)
+          setError(null)
+        }
+    }
+    fetchNodes();
+    
+  }, [])
+
+
+    
+    
+    
+  
+  return (
+    <div style={{ width: '100%', height: '100vh' }}>
+  {error && (<p> {error} </p>)}
+  {nodes && <ReactFlow 
+    nodes={nodes} 
+    edges={edges}
+    onNodesChange={onNodesChange}
+    onEdgesChange={onEdgesChange}
+    onConnect={onConnect}
+  >
+    <Controls/>
+    <MiniMap/>
+    <Background variant='dots' gap={12} size={1} />
+  </ReactFlow>}
+</div>
+  );
+}
