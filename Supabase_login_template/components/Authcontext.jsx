@@ -8,6 +8,7 @@ export const Authcontext = React.createContext({
   signIn: () => {},
   signOut: () => {},
   resetPassword: () => {},
+  sendOtpEmail: () => {},
 });
 
 export function useAuth() {
@@ -41,17 +42,36 @@ const signIn = async (email, password) => {
     }
   };
 
-  const resetPassword = async (email) => {
+  const sendOtpEmail = async (email) => {
     console.log("reseting");
-    await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://supabase.com/docs/guides/auth/auth-password-reset',
-    });   if (error){
+    const {error} = await supabase.auth.resetPasswordForEmail(email);   if (error){
       alert(error.message);
     }
     console.log("Reseting successful");
-    
+
+  };
+  
+
+  const resetPassword = async (email, tokenHash) => {
+    console.log("resetting");
+  
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.verifyOtp({
+      email,
+      token: token,
+      type: 'email',
+    })    
+    if (error) {
+      alert(error.message);
+    }
+  
+    console.log("Resetting successful");
   };
 
+  
+  
   useEffect(() => {
     const authListener = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
@@ -70,6 +90,7 @@ const signIn = async (email, password) => {
     signIn,
     signOut,
     resetPassword,
+    sendOtpEmail,
   };
 
 

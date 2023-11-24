@@ -1,39 +1,82 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../components/Authcontext';
-import toast from "react-hot-toast"
+import toast from 'react-hot-toast';
+import GP from '../Photos/GP.png';
+import { useNavigate } from 'react-router-dom';
+import supabase from "../../utils/Supabase";
+
 
 function PasswordReset() {
+  const { sendOtpEmail } = useAuth();
+  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
+  const [emailSent, setEmailSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-    const { resetPassword } = useAuth();
-    const [email, setEmail] = useState('');
+  const handleLogin = async (event) => {
+    event.preventDefault()
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    setLoading(true)
+    const { error } = await supabase.auth.signInWithOtp({ email })
 
-        try {
-            resetPassword(email)
-        } catch (error) {
-            console.log(error);
-        }
+    if (error) {
+      alert(error.error_description || error.message)
+    } else {
+      alert('Check your email for the login link!')
     }
+    setLoading(false)
+  }
 
-    return (
-        <div className="flex items-center justify-center h-screen">
-            <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
-                <div className="flex flex-col justify-center p-8 md:p-14">
-                    <div className="font-bold">Reset Your Password</div>
-                    <h1>Enter the email address associated with your account, and we'll send you a link to reset your password.</h1>
-                    <form onSubmit={handleSubmit} action="">
-                        <input placeholder="Email" type="email"         onChange={(e) => setEmail(e.target.value)}
- className="border border-[#9ca3af] outline-none p-3 h-10" />
-                        <button type="submit" className="mt-5 block bg-[#445858] text-white  py-2 px-4">
-                            Reset password
-                        </button>
-                    </form>
-                </div>
-            </div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      sendOtpEmail(email);
+      setEmailSent(true);
+      navigate('/xd');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCodeChange = (e) => {
+    if (emailSent) {
+      setCode(e.target.value);
+    }
+  };
+
+  console.log('Rendering. emailSent:', emailSent);
+
+  return (
+
+    <div className="flex flex-col justify-center items-center md:p-14">
+      <div>
+        <img src={GP} className="w-32 mx-auto " alt="nn" />
+        <div className="font-bold text-center mt-5 ">
+          <h2>Forgot Password?</h2>
         </div>
-    );
+        <h1 className="mt-2">No worries, we'll send you reset instructions.</h1>
+        <form onSubmit={handleLogin} action="">
+          <div className="relative block items-stretch mt-5">
+            <label className="block text-sm" htmlFor="">
+              Email
+            </label>
+            <input
+              placeholder="Enter your email"
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-80 border border-[#9ca3af] outline-none p-3 h-10"
+            />
+            <button
+              type="submit"
+              className="mx-auto mt-6 block bg-[#445858] text-white items-center whitespace-nowrap px-3 py-[0.25rem] text-center text-base font-normal leading-[1.6] border border-[#9ca3af] outline-none p-3 h-10"
+            >
+              Send Code
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 export default PasswordReset;
