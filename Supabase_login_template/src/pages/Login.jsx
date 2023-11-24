@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../components/Authcontext';
 import { useNavigate } from 'react-router-dom';
+import supabase from '../../utils/Supabase';
 
 function Login() {
   const { signIn, error } = useAuth();
@@ -9,23 +10,43 @@ function Login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [flag, setFlag] = useState('false');
   
+  const checkflag = async (email) => {
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', email);
+    console.log("data",data);
+    if (data[0].pdf_flag == "false") {
+      setFlag(false);
+    } else {
+      setFlag(true);
+    }
+    };
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-
     try {
       signIn(email, password);
+      if(email){
+        checkflag(email);
+      }
     } catch (error) {
       setError(error.message);
     }
   };
-
+  
   useEffect(() => {
-    if (user) {
+    console.log(flag);
+    if (user && flag==true) {
       Navigate('/home');
     }
-  }, [user, Navigate]);
+    if (user && flag==false) {
+      Navigate('/fileupload');
+    }
+  }, [user]);
+
 
   const handleRouting = () => {
     Navigate('/signup');
