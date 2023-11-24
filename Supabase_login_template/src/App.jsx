@@ -21,7 +21,7 @@ function App() {
         <Route path ="/LOL" element={<PasswordReset />} />
         <Route path="/home" element={<Home />} />
         <Route path="/fileupload" element={<Home   />} />
-        <Route path="/ZAB" element={<ChangePassword />} />
+        <Route path="/ChangePassword" element={<ChangePassword />} />
       </Routes>
     </BrowserRouter>
   );
