@@ -5,6 +5,10 @@ import './App.css'
 import OTPverify from './pages/OTPverify'
 import PasswordReset from './pages/PasswordReset'
 import ChangePassword from './pages/ChangePassword'
+=======
+import Fileupload from './pages/fileupload'
+import Home from './pages/Home'
+
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 
 function App() {  
@@ -16,6 +20,8 @@ function App() {
         <Route path ="/xd" element={<OTPverify />} />
         <Route path ="/signup" element={<Signup />} />
         <Route path ="/LOL" element={<PasswordReset />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/fileupload" element={<Fileupload />} />
       </Routes>
     </BrowserRouter>
   );

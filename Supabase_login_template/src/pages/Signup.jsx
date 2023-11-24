@@ -155,13 +155,13 @@ if (response.status === 200) {
             </div>
           </form>
           {error && <p className="text-red-500">{error}</p>}
-          <button
+          {/* <button
           type="button"
           onClick={handleTriggerPythonScript}
           className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
         >
           Trigger Python Script
-        </button>
+        </button> */}
           <div className="text-center text-gray-400">
             Already have an account?
             <span className="font-bold text-black cursor-pointer" onClick={hadlerouting}>
