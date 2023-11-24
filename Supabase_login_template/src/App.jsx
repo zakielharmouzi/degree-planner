@@ -5,7 +5,6 @@ import './App.css'
 import OTPverify from './pages/OTPverify'
 import PasswordReset from './pages/PasswordReset'
 import ChangePassword from './pages/ChangePassword'
-=======
 import Fileupload from './pages/fileupload'
 import Home from './pages/Home'
 
@@ -21,7 +20,8 @@ function App() {
         <Route path ="/signup" element={<Signup />} />
         <Route path ="/LOL" element={<PasswordReset />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/fileupload" element={<Fileupload />} />
+        <Route path="/fileupload" element={<Home   />} />
+        <Route path="/ZAB" element={<ChangePassword />} />
       </Routes>
     </BrowserRouter>
   );
