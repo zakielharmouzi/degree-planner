@@ -6,9 +6,7 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   addEdge,
-  MarkerType,
 } from 'reactflow';
-import { SmartStepEdge } from '@tisoap/react-flow-smart-edge'
 import supabase from '../../utils/Supabase';
 import 'reactflow/dist/style.css';
 import Modal from 'react-modal';
@@ -17,10 +15,6 @@ const initialNodes = [
   { id: 999, position: { x: 9999, y: 9999 }, data: { label: 'test' } },
 ];
 const initialEdges = [{}];
-
-const edgeTypes = {
-	smart: SmartStepEdge
-}
 
 export default function Flowchart() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -128,13 +122,7 @@ useEffect(() => {
         id: `${prereq.course_id}-${prereq.prereq_id}`,
         source: prereq.prereq_id.toString(),
         target: prereq.course_id.toString(),  
-        type: 'smart',
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          width: 20,
-          height: 20,
-          color: '#013220',
-        },
+        type: 'smoothstep',
       }));
       setEdges(edgeArray);
       setError(null);
@@ -161,32 +149,21 @@ const onNodeClick = (event, node) => {
   setModalOpen(true);
 };
 
-
-
-
-
-
 return (
   <div style={{ width: '100%', height: '100vh' }}>
     {error && <p> {error} </p>}
     {nodes && (
       <ReactFlow
-        
         nodes={nodes}
         edges={edges}
-        //onNodesChange={onNodesChange}
-        //onEdgesChange={onEdgesChange}
-        //onConnect={onConnect}
-        onNodeClick={onNodeClick} 
-        edgeTypes={edgeTypes}
-        
+        // onNodesChange={onNodesChange}
+        // onEdgesChange={onEdgesChange}
+        // onConnect={onConnect}
+        onNodeClick={onNodeClick}  
         >
-         
         <Controls />
         <MiniMap />
         <Background variant="dots" gap={12} size={1} />
-
-        
       </ReactFlow>
     )}
 

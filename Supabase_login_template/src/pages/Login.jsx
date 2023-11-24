@@ -12,25 +12,30 @@ function Login() {
   const [password, setPassword] = useState('');
   const [flag, setFlag] = useState('false');
   
-  const checkflag = async (email) => {
-  const { data, error } = await supabase
-    .from('users')
-    .select('*')
-    .eq('email', email);
-    console.log("data",data);
-    if (data[0].pdf_flag == "false") {
-      setFlag(false);
-    } else {
-      setFlag(true);
-    }
-    };
+
+  
+  // const checkflag = async (email) => {
+  // const { data, error } = await supabase
+  //   .from('users')
+  //   .select('*')
+  //   .eq('email', email);
+  //   console.log("data",data);
+  //   if (data[0].pdf_flag == "false") {
+  //     setFlag(false);
+  //   } else {
+  //     setFlag(true);
+  //   }
+  //   if(error){
+  //     console.log(error);
+  //   }
+  //   };
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
       signIn(email, password);
       if(email){
-        checkflag(email);
+        // checkflag(email);
       }
     } catch (error) {
       setError(error.message);
@@ -38,12 +43,11 @@ function Login() {
   };
   
   useEffect(() => {
-    console.log(flag);
-    if (user && flag==true) {
+    if (user ) {
       Navigate('/home');
     }
-    if (user && flag==false) {
-      Navigate('/fileupload');
+    if (!user ) {
+      Navigate('/');
     }
   }, [user]);
 
