@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../components/Authcontext';
 import toast from 'react-hot-toast';
 import GP from '../Photos/GP.png';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import supabase from "../../utils/Supabase";
 
 
@@ -13,17 +13,20 @@ function PasswordReset() {
   const [emailSent, setEmailSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const {setEmail2} = useAuth();
+
+
 
   const handleLogin = async (event) => {
     event.preventDefault()
-
+    setEmail2(email);
     setLoading(true)
     const { error } = await supabase.auth.signInWithOtp({ email })
-
     if (error) {
       alert(error.error_description || error.message)
     } else {
       alert('Check your email for the login link!')
+      navigate('/xd');
     }
     setLoading(false)
   }

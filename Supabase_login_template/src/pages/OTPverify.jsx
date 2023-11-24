@@ -3,12 +3,13 @@ import { useAuth } from '../../components/Authcontext';
 import GP from '../Photos/GP.png';
 import PasswordReset from './PasswordReset';
 
-function OTPverify() {
+function OTPverify(props) {
   const [otpValues, setOtpValues] = useState(['', '', '', '', '', '']);
   const {resetPassword } = useAuth();
   const [email, setEmail] = useState(''); 
-
+  
   const handleInputChange = (index, value) => {
+
     const newOtpValues = [...otpValues];
     newOtpValues[index] = value;
     setOtpValues(newOtpValues);
@@ -19,11 +20,12 @@ function OTPverify() {
     const token = otpValues.join('');
     console.log('OTP:', token);
     try {   
-        resetPassword(email, token);
+        resetPassword(token);
     }
     catch(error) {
         console.log(error);
     }
+
   };
 
 
@@ -42,7 +44,6 @@ function OTPverify() {
               <p>We have sent a code to your email</p>
             </div>
           </div>
-
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col space-y-16">
               <div className="flex flex-row items-center justify-between">

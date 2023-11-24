@@ -3,12 +3,14 @@ import supabase from "../utils/Supabase";
 
 export const Authcontext = React.createContext({
   user: null,
+  email_2: null,
   session: null,
   supabase: null,
   signIn: () => {},
   signOut: () => {},
   resetPassword: () => {},
   sendOtpEmail: () => {},
+  setEmail2: () => {},
 });
 
 export function useAuth() {
@@ -18,6 +20,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [user, setUser] = useState(null);
+  const [email_2, setEmail_2] = useState(null);
 
 const signIn = async (email, password) => {
   console.log("Signing in");
@@ -38,7 +41,7 @@ const signIn = async (email, password) => {
       console.log("Sign-out successful");
     } catch (error) {
       console.error("Sign-out failed", error);
-      throw error; // Rethrow the error for higher-level error handling if needed.
+      throw error; 
     }
   };
 
@@ -51,23 +54,21 @@ const signIn = async (email, password) => {
 
   };
   
+  const setEmail2 = async (email) => {
+    console.log("setting email");
+    setEmail_2(email);
+    console.log("email", email);
+  };
 
-  const resetPassword = async (email, tokenHash) => {
+  const resetPassword = async ( OTptok) => {
     console.log("resetting");
-  
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.verifyOtp({
-      email,
-      token: token,
-      type: 'email',
-    })    
-    if (error) {
+    console.log("session", OTptok);
+    console.log("mail waaa MIIII", email_2);
+    const { data, error } = await supabase.auth.verifyOtp({ email:email_2, token:OTptok, type: 'recovery'})
+    if (error){
       alert(error.message);
     }
-  
-    console.log("Resetting successful");
+    console.log("aaaa",data);
   };
 
   
@@ -91,6 +92,7 @@ const signIn = async (email, password) => {
     signOut,
     resetPassword,
     sendOtpEmail,
+    setEmail2,
   };
 
 
