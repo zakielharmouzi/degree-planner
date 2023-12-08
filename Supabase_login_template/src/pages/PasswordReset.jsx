@@ -26,7 +26,7 @@ function PasswordReset() {
       alert(error.error_description || error.message)
     } else {
       alert('Check your email for the login link!')
-      navigate('/xd');
+      navigate('/Verification');
     }
     setLoading(false)
   }
