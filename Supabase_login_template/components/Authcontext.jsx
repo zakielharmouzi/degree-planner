@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import supabase from "../utils/Supabase";
+import toast from 'react-hot-toast';
 
 export const Authcontext = React.createContext({
   user: null,
@@ -8,9 +9,10 @@ export const Authcontext = React.createContext({
   supabase: null,
   signIn: () => {},
   signOut: () => {},
-  resetPassword: () => {},
+  verificationOTP: () => {},
   sendOtpEmail: () => {},
   setEmail2: () => {},
+  updatePassword: () => {},
 });
 
 export function useAuth() {
@@ -50,13 +52,29 @@ const signIn = async (email, password) => {
   };
 
   const sendOtpEmail = async (email) => {
-    console.log("reseting");
-    const {error} = await supabase.auth.resetPasswordForEmail(email);   if (error){
-      alert(error.message);
+    console.log("Sending email");
+    const { error } = await supabase.auth.signInWithOtp({ email })
+    if (error) {
+      alert(error.error_description || error.message)
+    } else {
+      alert('Check your email for the login link!')
+      navigate('/xd');
     }
     console.log("Reseting successful");
 
   };
+
+  const updatePassword = async (password) => {
+    console.log("Updating password");
+    const { data, error } = await supabase.auth.updateUser({ password: new_password });
+    if (error){
+      alert(error.message);
+    }
+    console.log("aaaa",data);
+  };
+
+
+
   
   const setEmail2 = async (email) => {
     console.log("setting email");
@@ -64,7 +82,7 @@ const signIn = async (email, password) => {
     console.log("email", email);
   };
 
-  const resetPassword = async ( OTptok) => {
+  const verificationOTP = async ( email_2, OTptok) => {
     console.log("resetting");
     console.log("session", OTptok);
     console.log("mail waaa MIIII", email_2);
@@ -94,10 +112,11 @@ const signIn = async (email, password) => {
     supabase,
     signIn,
     signOut,
-
-    resetPassword,
+    
+    verificationOTP,
     sendOtpEmail,
     setEmail2,
+    updatePassword,
     error,
   };
 

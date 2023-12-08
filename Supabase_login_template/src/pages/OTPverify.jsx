@@ -6,7 +6,7 @@ import { Ripples } from "react-ripples-continued";
 
 function OTPverify(props) {
   const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
-  const { resetPassword } = useAuth();
+  const { verificationOTP } = useAuth();
   const [email, setEmail] = useState("");
 
   const handleInputChange = (index, value) => {
@@ -31,7 +31,7 @@ function OTPverify(props) {
     const token = otpValues.join("");
     console.log("OTP:", token);
     try {
-      resetPassword(token);
+      verificationOTP(token);
     } catch (error) {
       console.log(error);
     }
