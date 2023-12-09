@@ -31,7 +31,7 @@ function OTPverify(props) {
     const token = otpValues.join("");
     console.log("OTP:", token);
     try {
-      verificationOTP(token);
+      verificationOTP( token);
     } catch (error) {
       console.log(error);
     }

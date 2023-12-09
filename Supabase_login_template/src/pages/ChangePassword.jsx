@@ -47,7 +47,7 @@ function PasswordReset() {
                     
                 </div>
                 <div className="flex justify-center mt-6">
-                    <button type="submit" className=" bg-[#445858] text-white  py-2 px-4">
+                    <button type="submit" className="font-Montserrat bg-[#445858] text-white  py-2 px-4">
                         Reset password
                     </button>
                 </div>

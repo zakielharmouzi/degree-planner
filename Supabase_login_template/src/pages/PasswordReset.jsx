@@ -11,7 +11,7 @@ function PasswordReset() {
   const Navigate = useNavigate();
   const {setEmail2} = useAuth();
 
-  const handleLogin = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     setEmail2(email);
     try {
@@ -31,7 +31,7 @@ function PasswordReset() {
           Forgot Password?
         </div>
         <h1 className="font-Montserrat mt-7">No worries, we'll send you reset instructions.</h1>
-        <form onSubmit={handleLogin} action="">
+        <form onSubmit={handleSubmit} action="">
           <div className="relative items-stretch mt-5">
             <label className="font-Montserrat block text-sm" htmlFor="">
               Email

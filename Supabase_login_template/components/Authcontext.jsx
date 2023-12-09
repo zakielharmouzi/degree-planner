@@ -58,7 +58,7 @@ const signIn = async (email, password) => {
       alert(error.error_description || error.message)
     } else {
       alert('Check your email for the login link!')
-      navigate('/xd');
+      
     }
     console.log("Reseting successful");
 
@@ -74,8 +74,6 @@ const signIn = async (email, password) => {
   };
 
 
-
-  
   const setEmail2 = async (email) => {
     console.log("setting email");
     setEmail_2(email);
