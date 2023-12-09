@@ -8,7 +8,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 function PasswordReset() {
   const { sendOtpEmail } = useAuth();
   const [email, setEmail] = useState('');
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const {setEmail2} = useAuth();
 
   const handleSubmit = async (event) => {
@@ -16,7 +16,7 @@ function PasswordReset() {
     setEmail2(email);
     try {
       sendOtpEmail(email);  
-      Navigate('/xd');
+      navigate('/xd');
     } catch (error) {
       console.log(error);
     }
