@@ -68,7 +68,7 @@ function Home() {
             <div className="flex items-right">
           <img
             src="../src/Photos/GP.png"
-            className="mx-auto h-40 w-40 flex justify-center object-center"
+            className="mx-auto h-28 w-28 flex justify-center object-center"
             alt=""
           />
             </div>

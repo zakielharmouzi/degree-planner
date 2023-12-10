@@ -132,9 +132,14 @@ useEffect(() => {
 }, [nodes]);
 Modal.setAppElement('#root'); 
 
+const nodesCustomStyles ={
+  border: '3px solid #166432',
+  backgroundColor: '#EDEFEC',
+};
+
 const customStyles = {
   overlay: {
-    backdropFilter: 'blur(3px)', // Blurry effect
+    backdropFilter: 'blur(3px)', 
   },
   content: {
     top: '50%',
@@ -146,7 +151,7 @@ const customStyles = {
     padding: '40px',
     border: '2px solid #166432',
     backgroundColor: '#EDEFEC',
-    boxShadow: '0 1px 20px rgba(0, 0, 0, 0.5)',
+    boxShadow: '0 1px 20px rgba(0, 0, 0, 1)',
     },
 };
 const onNodeClick = (event, node) => {
@@ -167,6 +172,7 @@ return (
         // onEdgesChange={onEdgesChange}
         // onConnect={onConnect}
         onNodeClick={onNodeClick}  
+        style={nodesCustomStyles}
         >
         <Controls />
         <MiniMap />
