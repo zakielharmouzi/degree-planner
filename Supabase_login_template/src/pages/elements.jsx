@@ -132,7 +132,15 @@ useEffect(() => {
 }, [nodes]);
 Modal.setAppElement('#root'); 
 
+const nodesCustomStyles ={
+  border: '3px solid #166432',
+  backgroundColor: '#EDEFEC',
+};
+
 const customStyles = {
+  overlay: {
+    backdropFilter: 'blur(3px)', 
+  },
   content: {
     top: '50%',
     left: '50%',
@@ -140,7 +148,11 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-  },
+    padding: '40px',
+    border: '2px solid #166432',
+    backgroundColor: '#EDEFEC',
+    boxShadow: '0 1px 20px rgba(0, 0, 0, 1)',
+    },
 };
 const onNodeClick = (event, node) => {
   setSelectedCourseName(node.courseName);
@@ -150,7 +162,7 @@ const onNodeClick = (event, node) => {
 };
 
 return (
-  <div style={{ width: '100%', height: '100vh' }}>
+  <div style={{ width: '100%', height: '100vh', color: 'f4f4f4'}}>
     {error && <p> {error} </p>}
     {nodes && (
       <ReactFlow
@@ -160,6 +172,7 @@ return (
         // onEdgesChange={onEdgesChange}
         // onConnect={onConnect}
         onNodeClick={onNodeClick}  
+        style={nodesCustomStyles}
         >
         <Controls />
         <MiniMap />
@@ -173,11 +186,17 @@ return (
       style={customStyles}
       contentLabel="Course Name Modal"
     >
-      <h2>Selected Course</h2>
-      <p>{selectedCoursecode}</p>
-      <p>{selectedCourseName}</p>
+
+      <h2 style={{ color: 'black', fontWeight: 'bold' }}>Selected Course:</h2>
+      <br/>
+      <ul>
+        <li><p><strong>Course Code: </strong>{selectedCoursecode}</p></li>
+        <li><p><strong>Course Name: </strong>{selectedCourseName}</p></li>
+      </ul>
+      
+      <br/>
         <div style={{ textAlign: 'center' }}>
-          <button class='g-blue-500 hover:bg-gray-200 text-black font-bold py-2 px-2 rounded flex:auto' onClick={() => setModalOpen(false)}>Close</button>
+          <button className="closeButton mr-3 mt-0 text-center w-28 h-100 rounded px-5 py-2.5 overflow-hidden group bg-[#166432] relative hover:bg-gradient-to-r hover:from-green-900  text-white" onClick={() => setModalOpen(false)}>Close</button>
         </div>
       </Modal>
   </div>

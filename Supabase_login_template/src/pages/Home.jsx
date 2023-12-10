@@ -64,7 +64,14 @@ function Home() {
       )}
       {!loading && (
         <>
-          <div className="flex justify-between items-center p-4">
+        <div className="headerContainer flex justify-between items-center bg-grey-100">
+            <div className="flex items-right">
+          <img
+            src="../src/Photos/GP.png"
+            className="mx-auto h-28 w-28 flex justify-center object-center"
+            alt=""
+          />
+            </div>
             <div className="titleContainer flex-grow text-center">
               <h1 className="pageTitle text-4xl font-bold text-green-900 mb-0">
                 Welcome, {fname}!
@@ -72,13 +79,13 @@ function Home() {
             </div>
             <div className="signOutButtonContainer flex items-center">
               <button
-                className="signOutButton mx-auto text-center w-28 h-100 rounded px-5 py-2.5 overflow-hidden group bg-[#166432] relative hover:bg-gradient-to-r hover:from-green-900 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-600 transition-all ease-out duration-200"
+                className="signOutButton mr-3 mt-0 text-center w-28 h-100 rounded px-5 py-2.5 overflow-hidden group bg-[#166432] relative hover:bg-gradient-to-r hover:from-green-900 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-600 transition-all ease-out duration-200"
                 onClick={byebye}
               >
                 Sign Out
               </button>
             </div>
-          </div>
+        </div>
           <Flowchart />
         </>
       )}
@@ -87,3 +94,4 @@ function Home() {
 }
 
 export default Home;
+

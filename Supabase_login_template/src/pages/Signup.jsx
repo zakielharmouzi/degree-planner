@@ -79,8 +79,8 @@ if (response.status === 200) {
       <div className="flex w-full max-w-screen-md">
         <div className="flex-1/3 bg-white shadow-2xl rounded-l-2xl p-8">
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Al_Akhawayn_University_Logo.png"
-            className="mx-auto h-20 w-20 flex justify-center object-center mb-4"
+            src="../src/Photos/GP.png"
+            className="mx-auto h-40 w-40 flex justify-center object-center mb-4"
             alt=""
           />
           <form onSubmit={handleSignup} className="flex flex-wrap">

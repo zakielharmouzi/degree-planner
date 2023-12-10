@@ -61,7 +61,7 @@ function Login() {
       <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
         <div className="flex flex-col justify-center p-8 md:p-14">
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Al_Akhawayn_University_Logo.png"
+            src="../src/Photos/GP.png"
             className="mx-auto h-40 w-40 flex justify-center object-center"
             alt=""
           />
