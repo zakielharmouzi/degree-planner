@@ -64,7 +64,7 @@ function Home() {
       )}
       {!loading && (
         <>
-        <div className="headerContainer flex justify-between items-center ">
+        <div className="headerContainer flex justify-between items-center bg-grey-100">
             <div className="flex items-right">
           <img
             src="../src/Photos/GP.png"
