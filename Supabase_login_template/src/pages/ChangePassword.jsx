@@ -5,7 +5,7 @@ import PasswordStrengthBar from 'react-password-strength-bar';
 
 
 function PasswordReset() {
-    const { updatePassword } = useAuth();
+    const { changePassword } = useAuth();
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
     const [pw, setPw] = useState(true);
@@ -17,7 +17,7 @@ function PasswordReset() {
       const handleChange = async (event) => {
         event.preventDefault()
         try {
-          updatePassword(password2);  
+          changePassword(password2);  
         } catch (error) {
           console.log(error);
         }
@@ -30,13 +30,13 @@ function PasswordReset() {
                 <div className="space-y-4">
                     <div>
                         <label class="block text-sm font-medium mb-1 font-Montserrat">New Password <span class="text-rose-500">*</span></label>
-                        <input placeholder="Enter your password"
+                        <input type="password" placeholder="Enter your password"
                             className="w-full placeholder:font-Montserrat border border-[#9ca3af] outline-none p-3 h-10"
                             value={password} onChange={e => setPassword(e.target.value)}
                         />
                         <PasswordStrengthBar password={password} />
                         <label class=" block text-sm font-medium mb-1 mt-5 font-Montserrat">Confirm New Password <span class="text-rose-500">*</span></label>
-                        <input placeholder="Confirm your password"
+                        <input type="password" placeholder="Confirm your password"
                             className="w-full placeholder:font-Montserrat border border-[#9ca3af] outline-none p-3 h-10"
                             value={password2} onChange={e => {setPassword2(e.target.value)}}
                         />

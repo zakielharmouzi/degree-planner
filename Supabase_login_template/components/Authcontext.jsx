@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import supabase from "../utils/Supabase";
-import toast from 'react-hot-toast';
 
 export const Authcontext = React.createContext({
   user: null,
@@ -9,10 +8,10 @@ export const Authcontext = React.createContext({
   supabase: null,
   signIn: () => {},
   signOut: () => {},
-  verificationOTP: () => {},
+  resetPassword: () => {},
   sendOtpEmail: () => {},
   setEmail2: () => {},
-  updatePassword: () => {},
+  changePassword: () => {},
 });
 
 export function useAuth() {
@@ -34,10 +33,10 @@ const signIn = async (email, password) => {
     password,
   });
    if (authError) {
-      setError(authError.message); // Set the error message in the context
+      setError(authError.message); 
     } else {
       console.log("Sign-in successful");
-      setError(null); // Clear the error message
+      setError(null); 
     }
   };
 
@@ -51,44 +50,43 @@ const signIn = async (email, password) => {
     }
   };
 
-  const sendOtpEmail = async (email) => {
-    console.log("Sending email");
-    const { error } = await supabase.auth.signInWithOtp({ email })
+  const changePassword = async (new_password) => {
+    console.log("initiating...");
+    const { data, error } = await supabase.auth.updateUser({password: new_password})
     if (error) {
-      alert(error.error_description || error.message)
-    } else {
-      alert('Check your email for the login link!')
-      navigate('/xd');
+      alert(error.message);
+    }
+    console.log("done");
+  }
+
+  const sendOtpEmail = async (email) => {
+    console.log("reseting");
+    const {error} = await supabase.auth.resetPasswordForEmail(email);   if (error){
+      alert(error.message);
     }
     console.log("Reseting successful");
 
   };
-
-  const updatePassword = async (password) => {
-    console.log("Updating password");
-    const { data, error } = await supabase.auth.updateUser({ password: new_password });
-    if (error){
-      alert(error.message);
-    }
-    console.log("aaaa",data);
-  };
-
-
+  
   const setEmail2 = async (email) => {
     console.log("setting email");
     setEmail_2(email);
     console.log("email", email);
   };
 
-  const verificationOTP = async ( email_2, OTptok) => {
+  const resetPassword = async ( OTptok) => {
     console.log("resetting");
     console.log("session", OTptok);
     console.log("mail waaa MIIII", email_2);
     const { data, error } = await supabase.auth.verifyOtp({ email:email_2, token:OTptok, type: 'recovery'})
     if (error){
       alert(error.message);
+      return false;
     }
-    console.log("aaaa",data);
+    else{
+      console.log("aaaa",data);
+    return true;
+    }
   };
 
   
@@ -110,11 +108,10 @@ const signIn = async (email, password) => {
     supabase,
     signIn,
     signOut,
-    
-    verificationOTP,
+    changePassword,
+    resetPassword,
     sendOtpEmail,
     setEmail2,
-    updatePassword,
     error,
   };
 

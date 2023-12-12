@@ -16,12 +16,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/fileupload" element={<Fileupload />} />
-        <Route path ="/xd" element={<OTPverify />} />
+        <Route path ="/Verification" element={<OTPverify />} />
         <Route path ="/signup" element={<Signup />} />
-        <Route path ="/LOL" element={<PasswordReset />} />
+        <Route path ="/Reset" element={<PasswordReset />} />
         <Route path="/home" element={<Home />} />
         <Route path="/fileupload" element={<Home   />} />
-        <Route path="/ChangePassword" element={<ChangePassword />} />
+        <Route path="/Changepassword" element={<ChangePassword />} />
+
       </Routes>
     </BrowserRouter>
   );

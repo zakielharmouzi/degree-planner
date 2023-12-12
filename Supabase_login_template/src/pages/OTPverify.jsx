@@ -3,11 +3,14 @@ import { useAuth } from "../../components/Authcontext";
 import GP from "../Photos/GP.png";
 import PasswordReset from "./PasswordReset";
 import { Ripples } from "react-ripples-continued";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function OTPverify(props) {
   const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
-  const { verificationOTP } = useAuth();
+  const { resetPassword } = useAuth();
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+  let results = false;
 
   const handleInputChange = (index, value) => {
     const newOtpValues = [...otpValues];
@@ -26,17 +29,25 @@ function OTPverify(props) {
     setOtpValues(newOtpValues);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const token = otpValues.join("");
     console.log("OTP:", token);
+  
     try {
-      verificationOTP( token);
+      const results = await resetPassword(token);
+      console.log("OTP:", results);
+  
+      if (results === false) {
+        console.log("Invalid OTP");
+      } else {
+        navigate('/Changepassword');
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error:", error);
     }
-  };
-
+  }
+  
   return (
     <div className="flex flex-col justify-center items-center md:p-">
       <div className="w-screen">
