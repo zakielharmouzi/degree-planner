@@ -11,6 +11,7 @@ export const Authcontext = React.createContext({
   resetPassword: () => {},
   sendOtpEmail: () => {},
   setEmail2: () => {},
+  changePassword: () => {},
 });
 
 export function useAuth() {
@@ -32,10 +33,10 @@ const signIn = async (email, password) => {
     password,
   });
    if (authError) {
-      setError(authError.message); // Set the error message in the context
+      setError(authError.message); 
     } else {
       console.log("Sign-in successful");
-      setError(null); // Clear the error message
+      setError(null); 
     }
   };
 
@@ -48,6 +49,15 @@ const signIn = async (email, password) => {
       throw error; 
     }
   };
+
+  const changePassword = async (new_password) => {
+    console.log("initiating...");
+    const { data, error } = await supabase.auth.updateUser({password: new_password})
+    if (error) {
+      alert(error.message);
+    }
+    console.log("done");
+  }
 
   const sendOtpEmail = async (email) => {
     console.log("reseting");
@@ -71,8 +81,12 @@ const signIn = async (email, password) => {
     const { data, error } = await supabase.auth.verifyOtp({ email:email_2, token:OTptok, type: 'recovery'})
     if (error){
       alert(error.message);
+      return false;
     }
-    console.log("aaaa",data);
+    else{
+      console.log("aaaa",data);
+    return true;
+    }
   };
 
   
@@ -94,7 +108,7 @@ const signIn = async (email, password) => {
     supabase,
     signIn,
     signOut,
-
+    changePassword,
     resetPassword,
     sendOtpEmail,
     setEmail2,

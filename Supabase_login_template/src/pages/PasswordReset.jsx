@@ -16,6 +16,7 @@ function PasswordReset() {
   const {setEmail2} = useAuth();
 
 
+  
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -31,16 +32,6 @@ function PasswordReset() {
     setLoading(false)
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      sendOtpEmail(email);
-      setEmailSent(true);
-      navigate('/xd');
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleCodeChange = (e) => {
     if (emailSent) {
