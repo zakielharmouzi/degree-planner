@@ -4,6 +4,7 @@ import { useAuth } from '../../components/Authcontext';
 import supabase from '../../utils/Supabase';
 import { HashLoader } from "react-spinners";
 import GP from '../Photos/GP.png';
+import { useNavigate } from 'react-router-dom';
 
 
 const FileUpload = () => {
@@ -12,6 +13,7 @@ const FileUpload = () => {
   const [error, setError] = useState(null);
   const types = ['application/pdf'];
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const pdfHandler = async (e) => {
     e.preventDefault();
@@ -65,6 +67,7 @@ const sendDataToBackend = async () => {
     // No need to process the response if you're not expecting any specific data
 
     console.log('User ID sent to backend successfully.');
+    navigate('/home');
   } catch (error) {
     console.error('Error sending data to backend: ', error);
   }
@@ -74,11 +77,11 @@ const sendDataToBackend = async () => {
   return (
     <div>
 
-      {loading && (
+      {/* {loading && (
         <div className="loader-container flex items-center justify-center h-screen">
           <HashLoader color="#166432" size={100} />
         </div>
-      )}
+      )} */}
       {!loading && (
         <>
           <div className='w-40 block'>
