@@ -5,17 +5,34 @@ import PasswordReset from "./PasswordReset";
 import { Ripples } from "react-ripples-continued";
 import { Navigate, useNavigate } from 'react-router-dom';
 
-function OTPverify(props) {
+const OTPverify = (props) => {
   const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
   const { resetPassword } = useAuth();
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
-  let results = false;
+
+  const handleBackspace = (index) => {
+    // Move focus to the previous input if the current input is empty
+    if (index > 0 && !otpValues[index]) {
+      const prevInput = document.getElementById(`otpInput${index - 1}`);
+      if (prevInput) {
+        prevInput.focus();
+      }
+    }
+  };
 
   const handleInputChange = (index, value) => {
     const newOtpValues = [...otpValues];
     newOtpValues[index] = value;
     setOtpValues(newOtpValues);
+
+    // Automatically move focus to the next input if the current input has a value
+    if (value && index < otpValues.length - 1) {
+      const nextInput = document.getElementById(`otpInput${index + 1}`);
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
   };
 
   const onPaste = (event) => {
@@ -33,11 +50,11 @@ function OTPverify(props) {
     e.preventDefault();
     const token = otpValues.join("");
     console.log("OTP:", token);
-  
+
     try {
       const results = await resetPassword(token);
       console.log("OTP:", results);
-  
+
       if (results === false) {
         console.log("Invalid OTP");
       } else {
@@ -46,8 +63,8 @@ function OTPverify(props) {
     } catch (error) {
       console.error("Error:", error);
     }
-  }
-  
+  };
+
   return (
     <div className="flex flex-col justify-center items-center md:p-">
       <div className="w-screen">
@@ -57,7 +74,7 @@ function OTPverify(props) {
             <div className="font-semibold text-3xl font-Libre">
               <p>Email Verification</p>
             </div>
-            <div className="flex flex-row text-sm font-Montserrat font-medium text-[#445858]">
+            <div className="flex flex-row font-Montserrat font-medium text-[#445858]">
               <p>We have sent a code to your email</p>
             </div>
           </div>
@@ -67,12 +84,19 @@ function OTPverify(props) {
                 {otpValues.map((value, index) => (
                   <div key={index} className="w-16 h-16">
                     <input
+                      id={`otpInput${index}`}
+                      autoFocus={index === 0} // Auto-focus the first input
                       className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-[#445858]"
                       type="text"
                       onPaste={onPaste}
                       maxLength={1}
                       value={value}
                       onChange={(e) => handleInputChange(index, e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Backspace') {
+                          handleBackspace(index);
+                        }
+                      }}
                     />
                   </div>
                 ))}

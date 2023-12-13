@@ -33,11 +33,6 @@ function PasswordReset() {
   }
 
 
-  const handleCodeChange = (e) => {
-    if (emailSent) {
-      setCode(e.target.value);
-    }
-  };
 
   console.log('Rendering. emailSent:', emailSent);
 
@@ -46,20 +41,21 @@ function PasswordReset() {
     <div className="flex flex-col justify-center items-center md:p-14">
       <div>
         <img src={GP} className="w-32 mx-auto " alt="nn" />
-        <div className="font-bold text-center mt-5 ">
+        <div className="font-Libre font-bold text-3xl text-center mt-5 ">
           <h2>Forgot Password?</h2>
         </div>
-        <h1 className="mt-2">No worries, we'll send you reset instructions.</h1>
+        <h1 className="mt-3 font-Montserrat">No worries, we'll send you reset instructions.</h1>
         <form onSubmit={handleLogin} action="">
-          <div className="relative block items-stretch mt-5">
-            <label className="block text-sm" htmlFor="">
+          <div className="font-Montserrat relative block items-stretch mt-5">
+            <label className="block  text-sm" htmlFor="">
               Email
             </label>
             <input
-              placeholder="Enter your email"
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-80 border border-[#9ca3af] outline-none p-3 h-10"
-            />
+            type="email"
+            placeholder="Enter your email"
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-80 border border-[#9ca3af] outline-none p-3 h-10"
+          />
             <button
               type="submit"
               className="mx-auto mt-6 block bg-[#445858] text-white items-center whitespace-nowrap px-3 py-[0.25rem] text-center text-base font-normal leading-[1.6] border border-[#9ca3af] outline-none p-3 h-10"

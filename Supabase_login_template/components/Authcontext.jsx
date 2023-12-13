@@ -12,6 +12,7 @@ export const Authcontext = React.createContext({
   sendOtpEmail: () => {},
   setEmail2: () => {},
   changePassword: () => {},
+  updatePassword: () => {},
 });
 
 export function useAuth() {
@@ -58,6 +59,25 @@ const signIn = async (email, password) => {
     }
     console.log("done");
   }
+
+  const updatePassword = async (cpassword, new_password) => {
+    console.log(cpassword, new_password);
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: user.email, // email from current session
+      password: cpassword
+    })
+
+    if (data?.user?.id) { // current password is valid
+      await supabase.auth.updateUser({ password: new_password })
+      alert("Your password is changed")
+      return true;
+    } else {
+      alert("Your current password is not valid. For safety concerns, you need to re-log")
+      return false;
+    }
+  }
+
 
   const sendOtpEmail = async (email) => {
     console.log("reseting");
@@ -112,6 +132,7 @@ const signIn = async (email, password) => {
     resetPassword,
     sendOtpEmail,
     setEmail2,
+    updatePassword,
     error,
   };
 

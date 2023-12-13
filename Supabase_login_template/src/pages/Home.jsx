@@ -5,6 +5,8 @@ import { HashLoader } from "react-spinners";
 import supabase from "../../utils/Supabase";
 import "reactflow/dist/style.css";
 import Flowchart from "./elements";
+import { motion } from "framer-motion";
+import Navbar from "./Navbar.jsx";
 
 function Home() {
   const { signOut } = useAuth();
@@ -39,15 +41,6 @@ function Home() {
     getdata();
   }, []);
 
-  const byebye = async (e) => {
-    e.preventDefault();
-    try {
-      signOut();
-    } catch (error) {
-      console.error("Sign-out failed", error);
-      throw error;
-    }
-  };
 
   useEffect(() => {
     if (!user) {
@@ -64,21 +57,7 @@ function Home() {
       )}
       {!loading && (
         <>
-          <div className="flex justify-between items-center p-4">
-            <div className="titleContainer flex-grow text-center">
-              <h1 className="pageTitle text-4xl font-bold text-green-900 mb-0">
-                Welcome, {fname}!
-              </h1>
-            </div>
-            <div className="signOutButtonContainer flex items-center">
-              <button
-                className="signOutButton mx-auto text-center w-28 h-100 rounded px-5 py-2.5 overflow-hidden group bg-[#166432] relative hover:bg-gradient-to-r hover:from-green-900 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-600 transition-all ease-out duration-200"
-                onClick={byebye}
-              >
-                Sign Out
-              </button>
-            </div>
-          </div>
+        <Navbar fname={fname} />
           <Flowchart />
         </>
       )}

@@ -1,44 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../components/Authcontext';
 import { Navigate, useNavigate } from 'react-router-dom';
 import PasswordStrengthBar from 'react-password-strength-bar';
+import { HashLoader } from "react-spinners";
 
 
-
-function PasswordReset() {
-    const { changePassword } = useAuth();
+function UpdatePassword() {
+    const { updatePassword } = useAuth();
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
+    const [currentpassword, setCurrentPassword] = useState('');
     const [pw, setPw] = useState(true);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+
     const routeChange = () => {
-        navigate('/');
+        navigate('/home');
     }
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+          setLoading(false); // 
+        }, 2500);
+    
+        return () => clearTimeout(timer);
+      }, []);
+    
 
     const handleChange = async (event) => {
         event.preventDefault()
         try {
-            changePassword(password2);
+            const res = await updatePassword(currentpassword,password2);
+            if (res === true) {
+             routeChange();
+            }
         } catch (error) {
             console.log(error);
         }
     }
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false); // 
-        }, 4000);
-
-        return () => clearTimeout(timer);
-    }, []);
-
     return (
+        <>
+            {loading && (
+                <div className="loader-container flex items-center justify-center h-screen">
+                    <HashLoader color="#166432" size={100} />
+                </div>
+            )}
         <div className="max-w-sm mx-auto px-4 py-8">
-            <h1 className="font-Libre text-3xl text-slate-800 font-bold mb-6 mt-32">Change your Password</h1>
+            <h1 className="font-Libre text-3xl text-slate-800 font-bold mb-6 mt-32">Update your Password</h1>
             <form onSubmit={handleChange}>
                 <div className="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium mb-1 font-Montserrat">New Password <span class="text-rose-500">*</span></label>
+                        <label class="block text-sm font-medium mb-1 font-Montserrat">Current Password <span class="text-rose-500">*</span></label>
+                        <input type="password" placeholder="Enter your password"
+                            className="w-full placeholder:font-Montserrat border border-[#9ca3af] outline-none p-3 h-10"
+                            value={currentpassword} onChange={e => setCurrentPassword(e.target.value)}
+                        />
+
+                        <label class="mt-10 block text-sm font-medium mb-1 font-Montserrat">New Password <span class="text-rose-500">*</span></label>
                         <input type="password" placeholder="Enter your password"
                             className="w-full placeholder:font-Montserrat border border-[#9ca3af] outline-none p-3 h-10"
                             value={password} onChange={e => setPassword(e.target.value)}
@@ -60,15 +79,12 @@ function PasswordReset() {
                         Reset password
                     </button>
                 </div>
-                <div className="font-Montserrat mt-5 text-sm">
-                    Have an account? <button onClick={routeChange} class="font-medium text-indigo-500 hover:text-indigo-600">Sign In</button>
-                </div>
             </form>
 
         </div>
-
+        </>
     );
 
 }
 
-export default PasswordReset;
+export default UpdatePassword;
