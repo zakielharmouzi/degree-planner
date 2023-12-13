@@ -3,6 +3,7 @@ import { useAuth } from '../../components/Authcontext';
 import { useNavigate } from 'react-router-dom';
 import supabase from '../../utils/Supabase';
 import axios from 'axios';
+import GP from '../Photos/GP.png';
 
 const Signup = () => {
   const { user } = useAuth();
@@ -19,6 +20,7 @@ const Signup = () => {
   const isFormValid = () => {
     return email && password && fname && lname && id;
   };
+
   const handleSignup = async (e) => {
     e.preventDefault();
 
@@ -55,11 +57,12 @@ const Signup = () => {
       alert(error.error_description || error.message);
     }
   };
+
   const handleTriggerPythonScript = async () => {
-  console.log('Triggering Python script...');
+    console.log('Triggering Python script...');
     try {
-    const response = await axios.get('http://localhost:3000/trigger-python-script');
-if (response.status === 200) {
+      const response = await axios.get('http://localhost:3000/trigger-python-script');
+      if (response.status === 200) {
         alert('Python script executed successfully!');
       } else {
         alert('Failed to execute Python script.');
@@ -75,112 +78,66 @@ if (response.status === 200) {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="flex w-full max-w-screen-md">
-        <div className="flex-1/3 bg-white shadow-2xl rounded-l-2xl p-8">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Al_Akhawayn_University_Logo.png"
-            className="mx-auto h-20 w-20 flex justify-center object-center mb-4"
-            alt=""
-          />
-          <form onSubmit={handleSignup} className="flex flex-wrap">
-            <div className="w-full mb-4">
-              <label htmlFor="fname" className="mb-2 text-md">
-                First Name
-              </label>
-              <input
-                type="text"
-                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                value={fname}
-                onChange={(e) => setFname(e.target.value)}
-                placeholder="John"
-              />
-            </div>
-            <div className="w-full mb-4">
-              <label htmlFor="lname" className="mb-2 text-md">
-                Last Name
-              </label>
-              <input
-                type="text"
-                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                value={lname}
-                onChange={(e) => setLname(e.target.value)}
-                placeholder="Doe"
-              />
-            </div>
-            <div className="w-full mb-4">
-              <label htmlFor="id" className="mb-2 text-md">
-                ID
-              </label>
-              <input
-                type="text"
-                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-                placeholder="123456"
-              />
-            </div>
-            <div className="w-full mb-4">
-              <label htmlFor="email" className="mb-2 text-md">
-                Email
-              </label>
-              <input
-                type="email"
-                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="john.doe@example.com"
-              />
-            </div>
-            <div className="w-full mb-4">
-              <label htmlFor="password" className="mb-2 text-md">
-                Password
-              </label>
-              <input
-                type="password"
-                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="****"
-              />
-            </div>
-            <div className="w-full flex justify-between py-4">
-              <button
-                type="submit"
-                className="mx-auto text-center w-full h-12 rounded px-5 overflow-hidden group bg-[#166432] relative hover:bg-gradient-to-r hover:from-green-900 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-600 transition-all ease-out duration-200"
-              >
-                <span className="absolute right-0 w-8 h-12 -mt-4 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-                <span className="mx-auto relative">Sign Up</span>
-              </button>
-            </div>
-          </form>
-          {error && <p className="text-red-500">{error}</p>}
-          {/* <button
-          type="button"
-          onClick={handleTriggerPythonScript}
-          className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
-        >
-          Trigger Python Script
-        </button> */}
-          <div className="text-center text-gray-400">
-            Already have an account?
-            <span className="font-bold text-black cursor-pointer" onClick={hadlerouting}>
-              {' '}
-              Login!
-            </span>
-          </div>
-        </div>
-        <div className="flex-2/3">
-          <img
-            src="https://pbs.twimg.com/media/Etympz0WgAE4iS1?format=jpg&name=4096x4096"
-            alt="img"
-            className="w-full h-screen rounded-r-2xl object-cover"
-          />
-        </div>
-        
+    <>
+      <div>
+        <img src={GP} alt="GP" className="absolute w-40" />
       </div>
-    </div>
+      <div className="max-w-sm mx-auto px-4 py-8">
+        <h1 className="font-Libre text-3xl text-slate-800 font-bold mb-4 mt-10 text-center">Welcome!</h1>
+        <h1 className="font-Libre mb-6">Please create an account to access our services.</h1>
+        <form onSubmit={handleSignup}>
+          <div>
+            <label className="block text-sm font-medium mb-1 font-Montserrat">First Name <span className="text-rose-500">*</span></label>
+            <input
+              type="text"
+              placeholder="John"
+              className="w-full placeholder:font-Montserrat border border-[#9ca3af] outline-none p-3 h-10"
+              onChange={(e) => setFname(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1 mt-5 font-Montserrat">Last Name <span className="text-rose-500">*</span></label>
+            <input
+              type="text"
+              placeholder="Doe"
+              className="w-full placeholder:font-Montserrat border border-[#9ca3af] outline-none p-3 h-10"
+              onChange={(e) => setLname(e.target.value)}
+            />
+            <label className="block text-sm font-medium mb-1 mt-5 font-Montserrat">AUI ID <span className="text-rose-500">*</span></label>
+            <input
+              type="text"
+              placeholder="123456"
+              className="w-full placeholder:font-Montserrat border border-[#9ca3af] outline-none p-3 h-10"
+              onChange={(e) => setId(e.target.value)}
+            />
+            <label className="block text-sm font-medium mb-1 mt-5 font-Montserrat">Email <span className="text-rose-500">*</span></label>
+            <input
+              type="email"
+              placeholder="F.Lastname@aui.ma"
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full placeholder:font-Montserrat border border-[#9ca3af] outline-none p-3 h-10"
+            />
+            <label className="block text-sm font-medium mb-1 mt-5 font-Montserrat">Password <span className="text-rose-500">*</span></label>
+            <input
+              type="password"
+              placeholder="***"
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full placeholder:font-Montserrat border border-[#9ca3af] outline-none p-3 h-10"
+            />
+          </div>
+          {error && <p className="text-red-500">{error}</p>}
+          <div className="flex justify-center mt-6">
+            <button type="submit" className="font-Montserrat bg-[#445858] text-white py-2 px-8">
+              Sign Up!
+            </button>
+          </div>
+        </form>
+        <div className="font-Montserrat mt-5 text-sm">
+          Have an account? <button className="font-medium text-indigo-500 hover:text-indigo-600" onClick={hadlerouting}>Sign In</button>
+        </div>
+      </div>
+    </>
   );
 };
 
-export default Signup
+export default Signup;
