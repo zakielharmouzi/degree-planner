@@ -1,6 +1,8 @@
 from flask import Flask, request
 from flask_cors import CORS
 from supabase import create_client, Client
+import PyPDF2
+import re
 
 
 import PyPDF2
@@ -29,6 +31,18 @@ def download_random_pdf():
     # Write the file to the local filesystem
     with open(destination, 'wb') as f:
         f.write(res)
+
+    pattern = r'\b[A-Z]{3}\d+\b'
+    pdfFileObj = open(destination, 'rb')
+    pdfReader = PyPDF2.PdfReader(pdfFileObj)
+    for page in pdfReader.pages:
+        print(page.extract_text())
+        text = page.extract_text()
+        matches = re.findall(pattern, text)
+        for match in matches:
+            print(match)
+    pdfFileObj.close()
+    return "Hello World!"
 
 
 if __name__ == "__main__":
