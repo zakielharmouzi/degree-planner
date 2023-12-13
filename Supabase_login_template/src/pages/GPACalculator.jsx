@@ -9,7 +9,6 @@ const GPACalculator = () => {
   const Navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false); // 
@@ -20,9 +19,11 @@ const GPACalculator = () => {
 
 
   const initialCourses = [
-    { name: 'Math', creditHours: 3 },
-    { name: 'English', creditHours: 4, grade: 'B' },
-    { name: 'History', creditHours: 3, grade: 'C' },
+    { name: 'CHE 1401', creditHours: 4},
+    { name: 'CSC 4307', creditHours: 3},
+    { name: 'HUM 2301', creditHours: 3},
+    { name: 'MKT 3301', creditHours: 3},
+    { name: 'MTH 3301', creditHours: 3},
   ];
 
   const [courses, setCourses] = useState(initialCourses);
@@ -83,13 +84,13 @@ const GPACalculator = () => {
                   <HashLoader color="#166432" size={100} />
               </div>
           )}
-      <Navbar />
+      <Navbar fname={"Salma"} />
       <div className="flex flex-col items-center">
         <h1 className="text-5xl font-Libre text-[#445858] mt-10">GPA Calculator</h1>
         <span className="w-1/2 font-Montserrat text-center">
           In this page, you can project your GPA for your current courses to track your progress. :)
         </span>
-        <table className="mt-8 border border-gray-500">
+        <table className="mt-8 border border-gray-500 font-Montserrat">
           <thead>
             <tr>
               <th className="border px-20 py-2 font-Libre">Course Title</th>
@@ -108,12 +109,13 @@ const GPACalculator = () => {
                     <option value="A+">A+</option>
                     <option value="A">A</option>
                     <option value="A-">A-</option>
+                    <option value="B+">B+</option>
                     <option value="B">B</option>
-                    <option value="A">A</option>
-                    <option value="A-">A-</option>
-                    <option value="A+">A+</option>
-                    <option value="A">A</option>
-                    <option value="A-">A-</option>
+                    <option value="B-">B-</option>
+                    <option value="C+">C+</option>
+                    <option value="C">C</option>
+                    <option value="C-">C-</option>
+                    <option value="F">F</option>
 
                   </select>
                 </td>
@@ -128,10 +130,9 @@ const GPACalculator = () => {
         <div>
           <strong>GPA for this semester:</strong> {calculateGPA().toFixed(2)}
           <div>
-          <strong>Current CGPA:</strong>
+          <strong>Current CGPA: </strong> {3.73}
           </div>
 <div>
-          <strong>CGPA for this semester:</strong> 
           </div>
         </div>
       </div>
