@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import supabase from "../utils/Supabase";
+import toast, { Toaster } from "react-hot-toast";
 
 export const Authcontext = React.createContext({
   user: null,
@@ -22,22 +23,25 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [user, setUser] = useState(null);
-
   const [email_2, setEmail_2] = useState(null);
+  const [error, setError] = useState(null);
 
-  const [error, setError] = useState(null); 
+  const signIn = async (email, password) => {
+    try {
+      const { error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-const signIn = async (email, password) => {
-  console.log("Signing in");
-  const {error: authError} = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-   if (authError) {
-      setError(authError.message); 
-    } else {
-      console.log("Sign-in successful");
-      setError(null); 
+      if (authError) {
+        setError(authError.message);
+        toast.error('Login failed. Please check your credentials.');
+      } else {
+        setError(null);
+        toast.success('Login successful!');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
     }
   };
 
@@ -140,5 +144,11 @@ const signIn = async (email, password) => {
 
 
 
-  return <Authcontext.Provider value={value}>{children}</Authcontext.Provider>;
+  return (
+    <Authcontext.Provider value={value}>
+      {/* Use Toaster from react-hot-toast for displaying notifications */}
+      <Toaster position="top-right" reverseOrder={false} />
+      {children}
+    </Authcontext.Provider>
+  );
 }

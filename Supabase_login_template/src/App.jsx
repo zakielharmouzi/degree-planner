@@ -8,7 +8,8 @@ import Fileupload from './pages/fileupload'
 import Home from './pages/Home'
 import GPACalculator from './pages/GPACalculator'
 import UpdatePassword from './pages/UpdatePassword'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 
 function App() {  

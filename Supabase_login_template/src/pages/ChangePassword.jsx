@@ -9,7 +9,6 @@ function PasswordReset() {
     const { changePassword } = useAuth();
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
-    const [pw, setPw] = useState(true);
     const navigate = useNavigate();
     const routeChange = () => {
         navigate('/');
@@ -26,7 +25,7 @@ function PasswordReset() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setLoading(false); // 
+            setLoading(false); 
         }, 4000);
 
         return () => clearTimeout(timer);
