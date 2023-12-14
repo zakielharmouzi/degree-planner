@@ -45,11 +45,11 @@ function Login() {
 
   useEffect(() => {
     console.log(flag);
-    if (user && flag === false) {
-      Navigate('/home');
+    if (!user) {
+      Navigate('/');
     }
-    if (user && flag === true) {
-      Navigate('/fileupload');
+    else{
+      Navigate('/home');
     }
   }, [user, flag]);
 
