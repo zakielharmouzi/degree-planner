@@ -43,7 +43,15 @@ const Navbar = ({  }) => {
         <motion.button
         initial={{ borderRadius: '10px' }}
         whileHover={{ backgroundColor: '#445858', scale: 1.1, borderRadius: '10px' }}
-        whileTap={{ scale: 0.77 }}
+        whileTap={{ scale: 0.90 }}
+        onClick={() => Navigate('/home')}
+        >
+        Home
+        </motion.button>
+        <motion.button
+        initial={{ borderRadius: '10px' }}
+        whileHover={{ backgroundColor: '#445858', scale: 1.1, borderRadius: '10px' }}
+        whileTap={{ scale: 0.90 }}
         onClick={() => Navigate('/degreeplanner')}
         >
         Degree Planner
@@ -51,7 +59,7 @@ const Navbar = ({  }) => {
         <motion.button
         initial={{ borderRadius: '10px' }}
         whileHover={{ backgroundColor: '#445858', scale: 1.1, borderRadius: '10px' }}
-        whileTap={{ scale: 0.77 }}
+        whileTap={{ scale: 0.90 }}
         onClick={() => Navigate('/GPACalc')}
         >
         GPA Calculator

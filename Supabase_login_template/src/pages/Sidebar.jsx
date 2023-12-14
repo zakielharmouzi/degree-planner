@@ -74,10 +74,10 @@ export default () => {
             <aside>
                 {nodes.map((node, index) => (
             
-            <div key={index} className="dndnode" onDragStart={(event) => onDragStart(event, node.courseName)} draggable>
+            <div key={index} className=" dndnode w-32 h-96" onDragStart={(event) => onDragStart(event, node.courseName)} draggable>
                 
                 <h1>
-                    {node.course_name}
+                    {node.courseName}
                 </h1>
                 
             </div>

@@ -10,12 +10,15 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import DownloadButton from './DownloadButton';
-
+import Navbar from "./Navbar.jsx";
 import Sidebar from './Sidebar';
-import Navbar from './Navbar';
+import { HashLoader } from "react-spinners";
 import './updatenode.css'
 
 import './index.css';
+
+
+
 
 const initialNodes = [
   {
@@ -38,6 +41,15 @@ const DnDFlow = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
   const [nodeName, setNodeName] = useState('Enter Class name');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false); // 
+    }, 2500);
+  
+    return () => clearTimeout(timer);
+  }, []);
 
   
   
@@ -91,10 +103,14 @@ const DnDFlow = () => {
   
 
   return (
+    <>
+    {loading && (
+      <div className="loader-container flex items-center justify-center h-screen">
+          <HashLoader color="#166432" size={100} />
+      </div>
+  )}
+
     <div className="flex flex-col h-screen bg-grey-100">
-        
-        
-          
           <Navbar />
 
           <div className="dndflow">
@@ -126,7 +142,8 @@ const DnDFlow = () => {
           
         
       </div>
-   
+      </>
+
   );
 };
 
