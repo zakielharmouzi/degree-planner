@@ -59,7 +59,6 @@
         {!loading && (
           <>
           <Navbar fname={fname} />
-
             <Flowchart />
           </>
         )}

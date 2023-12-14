@@ -12,6 +12,7 @@ import { SmartStepEdge } from '@tisoap/react-flow-smart-edge'
 import supabase from '../../utils/Supabase';
 import 'reactflow/dist/style.css';
 import Modal from 'react-modal';
+import { useAuth } from '../../components/Authcontext';
 
 const initialNodes = [
   { id: 999, position: { x: 9999, y: 9999 }, data: { label: 'test' } },
@@ -30,6 +31,7 @@ export default function Flowchart() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedCourseName, setSelectedCourseName] = useState('');
   const [selectedCoursecode, setSelectedCoursecode] = useState('');
+  const { user } = useAuth();
 
   const onConnect = useCallback((params) =>
     setEdges((eds) => addEdge(params, eds)),
@@ -142,6 +144,33 @@ useEffect(() => {
   };
   fetchEdges();
 }, [nodes]);
+
+useEffect(() => {
+  const fetch_taken_courses = async () => {
+    let user_uid = user.id
+    console.log(user_uid)
+    const { data, error } = await supabase
+      .from('user_courses')
+      .select('*')
+      .eq('id', user_uid);
+    if (error) {
+      setError('Could not fetch taken courses');
+    }
+    if (data) {
+      console.log(data);
+      const taken_courses = data.map((course) => course.course_id);
+      const nodeArray = nodes.map((node) => {
+        if (taken_courses.includes(parseInt(node.id))) {
+          node.style = { background: '#013220', color: '#fff' };
+        }
+        return node;
+      });
+      setNodes(nodeArray);
+      setError(null);
+    }
+  };
+  fetch_taken_courses();
+}, [courses]);
 Modal.setAppElement('#root'); 
 
 const customStyles = {
