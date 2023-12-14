@@ -11,6 +11,8 @@ import UpdatePassword from './pages/UpdatePassword'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
+import DnDFlow from './pages/Degreeplanner'
+
 
 function App() {  
   
@@ -27,6 +29,7 @@ function App() {
         <Route path="/fileupload" element={<Home   />} />
         <Route path="/Changepassword" element={<ChangePassword />} />
         <Route path="/UpdatePassword" element={<UpdatePassword />} />
+        <Route path="/degreeplanner" element={<DnDFlow />} />
 
       </Routes>
     </BrowserRouter>

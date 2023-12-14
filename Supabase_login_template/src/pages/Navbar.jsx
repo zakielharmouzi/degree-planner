@@ -44,7 +44,7 @@ const Navbar = ({  }) => {
         initial={{ borderRadius: '10px' }}
         whileHover={{ backgroundColor: '#445858', scale: 1.1, borderRadius: '10px' }}
         whileTap={{ scale: 0.77 }}
-        onClick={() => Navigate('/home')}
+        onClick={() => Navigate('/degreeplanner')}
         >
         Degree Planner
         </motion.button>
