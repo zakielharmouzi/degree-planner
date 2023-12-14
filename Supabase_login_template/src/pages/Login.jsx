@@ -51,6 +51,9 @@ function Login() {
     else{
       Navigate('/home');
     }
+    if (user && flag=='false') {
+      Navigate('/fileupload');
+    }
   }, [user, flag]);
 
   const handleRouting = () => {
