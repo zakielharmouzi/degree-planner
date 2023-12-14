@@ -1,6 +1,7 @@
 import React from 'react';
 import { Panel, useReactFlow, getRectOfNodes, getTransformForBounds } from 'reactflow';
 import { toPng } from 'html-to-image';
+import { motion } from "framer-motion";
 
 function downloadImage(dataUrl) {
   const a = document.createElement('a');
@@ -36,9 +37,14 @@ function DownloadButton() {
 
   return (
     <Panel position="top-left">
-      <button className="mx-auto text-center w-28 h-100 rounded px-5 py-2.5 overflow-hidden group bg-[#166432] relative hover:bg-gradient-to-r hover:from-green-900 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-600 transition-all ease-out duration-200" onClick={onClick}>
-        Download Image
-      </button>
+        <motion.button
+        className="bg-[#445858] text-white font-Montserrat font-sm flex space-x-4 py-4 px-4 ms-auto rounded-lg"
+        onClick={onClick}
+        whileHover={{ scale: 1.1, }}
+        whileTap={{ scale: 0.99 }}
+        >
+        Download!
+        </motion.button>
     </Panel>
   );
 }

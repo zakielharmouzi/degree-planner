@@ -95,7 +95,7 @@ const DnDFlow = () => {
         
         
           
-          <Navbar fname={"Salma"} />
+          <Navbar />
 
           <div className="dndflow">
       <ReactFlowProvider>
